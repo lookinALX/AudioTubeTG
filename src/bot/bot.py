@@ -1,6 +1,5 @@
 import re
 from aiogram import Bot, Dispatcher, Router, types
-from aiogram.methods.send_audio import SendAudio
 from aiogram.filters import Command
 from src.scripts import y2audio
 
