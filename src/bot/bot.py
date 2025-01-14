@@ -31,9 +31,9 @@ class TelegramBot:
             await message.reply("Hi! I'm your bot.\nUse /start or /help to see this message.")
 
         @self.router.message()
-        async def echo_message(message: types.Message):
+        async def download_request_message(message: types.Message):
             """
-            Echo any message sent to the bot.
+            Download request message sent to the bot.
             """
             if self.is_youtube_link(message.text):
                 url = message.text
