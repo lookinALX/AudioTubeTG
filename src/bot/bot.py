@@ -23,12 +23,19 @@ class TelegramBot:
         Register bot command and message handlers.
         """
 
-        @self.router.message(Command(commands=["start", "help"]))
+        @self.router.message(Command(commands=["start"]))
         async def send_welcome(message: types.Message):
             """
-            Handler for /start and /help commands.
+            Handler for /start command.
             """
-            await message.reply("Hi! I'm your bot.\nUse /start or /help to see this message.")
+            await message.reply("Hi! I'm your bot.\nUse /help to see what I can.")
+
+        @self.router.message(Command(commands=["help"]))
+        async def send_welcome(message: types.Message):
+            """
+            Handler for /help command.
+            """
+            await message.reply("Please send a youtube video link to me and I will send you the audio from this video.")
 
         @self.router.message()
         async def download_request_message(message: types.Message):
