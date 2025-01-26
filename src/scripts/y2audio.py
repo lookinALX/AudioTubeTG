@@ -26,7 +26,8 @@ class YouTubeToAudio:
 
     def download(self, url, codec='mp3'):
         """
-        Downloads audio from the given YouTube Uhttps://www.youtube.com/live/5uxzcGM8SYE?si=FgOqfoRP5OVRkJm5RL and converts it to a WAV file.
+        Downloads audio from the given YouTube Uhttps://www.youtube.com/live/5uxzcGM8SYE?si=FgOqfoRP5OVRkJm5RL and
+        converts it to a WAV file.
         """
         if codec == 'wav':
             ydl_opts = self.ydl_opts_wav

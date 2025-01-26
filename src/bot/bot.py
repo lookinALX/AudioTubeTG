@@ -41,7 +41,7 @@ class TelegramBot:
             """
             Download request message sent to the bot.
             """
-            if self.is_youtube_link(message.text):
+            if self.is_youtube_link(message.text) or self.is_twitch_link(message.text):
                 url = message.text
                 await message.reply("I'll download your video. When the process is complete, "
                                     "I'll send you an audio file")
@@ -54,12 +54,17 @@ class TelegramBot:
                 except Exception as e:
                     await message.reply(f"Failed to send file: {e}")
             else:
-                await message.reply("It's not a youtube link. Please send a correct url")
+                await message.reply("It's neither a youtube link nor a twitch link. Please send a correct url")
 
     @staticmethod
     def is_youtube_link(url):
         pattern = (r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/('
                    r'watch\?v=|embed\/|v\/|e\/|.+\/videos\/)([A-Za-z0-9_-]{11})')
+        return bool(re.match(pattern, url))
+
+    @staticmethod
+    def is_twitch_link(url):
+        pattern = r'(?:https?:\/\/)?(?:www\.)?twitch\.tv\/(?:videos\/\d+|clip\/[\w-]+|[\w-]+\/clip\/[\w-]+)'
         return bool(re.match(pattern, url))
 
     async def run(self):
