@@ -4,3 +4,4 @@ config.py
 __pycache__/
 src/bot/__pycache__/
 src/scripts/__pycache__/
+.venv/
