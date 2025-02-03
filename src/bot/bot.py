@@ -48,12 +48,11 @@ class TelegramBot:
                                     "I'll send you an audio file")
                 converter = y2audio.YouTubeToAudio()
                 file_path = await converter.download(url)
-                print(file_path)
                 try:
                     file = types.FSInputFile(file_path)
                     await self.bot.send_audio(message.chat.id, file)
-                    #if os.path.exists(file_path): # Remove file from server after sending to the client
-                    #    os.remove(file_path)
+                    if os.path.exists(file_path): # Remove file from server after sending to the client
+                        os.remove(file_path)
                 except Exception as e:
                     await message.reply(f"Failed to send file: {e}")
             else:
