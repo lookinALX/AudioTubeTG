@@ -1,5 +1,6 @@
 import yt_dlp
 import shutil
+import asyncio
 import sys
 import os
 
@@ -24,18 +25,20 @@ class YouTubeToAudio:
             'outtmpl': '%(title)s.%(ext)s',  # Save with the video title as the name
         }
 
-    def download(self, url, codec='mp3'):
+    async def download(self, url, codec='mp3'):
         """
-        Downloads audio from the given YouTube Uhttps://www.youtube.com/live/5uxzcGM8SYE?si=FgOqfoRP5OVRkJm5RL and
-        converts it to a WAV file.
+        Downloads audio from the given YouTube Url and converts it to a mp3 file.
         """
         if codec == 'wav':
             ydl_opts = self.ydl_opts_wav
         else:
             ydl_opts = self.ydl_opts_mp3
 
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(None, self._download, url, ydl_opts, codec)
+
+    def _download(self, url, ydl_opts, codec):
         try:
-            # Download the audio file
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(url, download=False)
                 file_title = info.get('title', 'output')  # Get video title for naming
@@ -52,7 +55,7 @@ class YouTubeToAudio:
         except Exception as e:
             print(f"An error occurred: {e}")
 
-    def run(self):
+    async def run(self):
         """
         Entry point for the script. Handles user input.
         """
@@ -64,7 +67,7 @@ class YouTubeToAudio:
             return
 
         url = args[0] if args else input("Enter YouTube URL: ")
-        self.download(url)
+        await self.download(url)
 
     @staticmethod
     def move_file(source_path, destination_folder):
@@ -99,4 +102,4 @@ class YouTubeToAudio:
 
 if __name__ == "__main__":
     converter = YouTubeToAudio()
-    converter.run()
+    asyncio.run(converter.run())

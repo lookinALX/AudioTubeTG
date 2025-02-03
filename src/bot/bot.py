@@ -1,3 +1,4 @@
+import os
 import re
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.filters import Command
@@ -46,11 +47,13 @@ class TelegramBot:
                 await message.reply("I'll download your video. When the process is complete, "
                                     "I'll send you an audio file")
                 converter = y2audio.YouTubeToAudio()
-                file_path = converter.download(url)
+                file_path = await converter.download(url)
                 print(file_path)
                 try:
                     file = types.FSInputFile(file_path)
                     await self.bot.send_audio(message.chat.id, file)
+                    #if os.path.exists(file_path): # Remove file from server after sending to the client
+                    #    os.remove(file_path)
                 except Exception as e:
                     await message.reply(f"Failed to send file: {e}")
             else:
