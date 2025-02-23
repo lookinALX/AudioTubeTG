@@ -14,6 +14,7 @@ class YouTubeToAudio:
                 'preferredcodec': 'wav',
             }],
             'outtmpl': '%(title)s.%(ext)s',  # Save with the video title as the name
+            'cookiesfrombrowser': ('firefox', None, None, None),
         }
 
         self.ydl_opts_mp3 = {
@@ -23,6 +24,7 @@ class YouTubeToAudio:
                 'preferredcodec': 'mp3',
             }],
             'outtmpl': '%(title)s.%(ext)s',  # Save with the video title as the name
+            'cookiesfrombrowser': ('firefox', None, None, None),
         }
 
     async def download(self, url, codec='mp3'):
@@ -62,7 +64,7 @@ class YouTubeToAudio:
         args = sys.argv[1:]
         if len(args) > 1:
             print("Too many arguments.")
-            print("Usage: python youtubetowav.py <optional link>")
+            print("Usage: python y2audio.py <optional link>")
             print("If a link is given, it will automatically convert it to .wav. Otherwise, a prompt will be shown.")
             return
 
